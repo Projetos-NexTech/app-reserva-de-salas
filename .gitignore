@@ -1,0 +1,30 @@
+# Node.js dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+
+# Firebase credentials
+src/config/reserva-app-2c3ba-firebase-adminsdk-fbsvc-e7f018eb3c.json
+backend/src/config/reserva-app-2c3ba-firebase-adminsdk-fbsvc-e7f018eb3c.json
+backend/src/config/*.json
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.vscode/
+.idea/
+*.iml
+
+# Build files
+dist/
+build/
