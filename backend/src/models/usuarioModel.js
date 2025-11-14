@@ -27,4 +27,9 @@ async function listUsuarios() {
     return snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
 }
 
-module.exports = { createUsuario, getUsuarioById, findUsuarioByEmail, listUsuarios };
+async function deleteUsuario(id) {
+    await db.collection(COLLECTION).doc(id).delete();
+    return true;
+}
+
+module.exports = { createUsuario, getUsuarioById, findUsuarioByEmail, listUsuarios, deleteUsuario };

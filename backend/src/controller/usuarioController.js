@@ -39,4 +39,15 @@ async function listUsuarios(req, res) {
   }
 }
 
-module.exports = { createUsuario, getUsuario, listUsuarios };
+async function deleteUsuario(req, res) {
+  try {
+    const { id } = req.params;
+    await usuarioModel.deleteUsuario(id);
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'erro interno' });
+  }
+}
+
+module.exports = { createUsuario, getUsuario, listUsuarios, deleteUsuario };
