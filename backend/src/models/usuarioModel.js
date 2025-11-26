@@ -32,4 +32,11 @@ async function deleteUsuario(id) {
     return true;
 }
 
-module.exports = { createUsuario, getUsuarioById, findUsuarioByEmail, listUsuarios, deleteUsuario };
+async function updateUsuario(id, data) {
+    const ref = db.collection(COLLECTION).doc(id);
+    await ref.update({ ...data, updatedAt: new Date() });
+    const doc = await ref.get();
+    return { id: doc.id, ...doc.data() };
+}
+
+module.exports = { createUsuario, getUsuarioById, findUsuarioByEmail, listUsuarios, deleteUsuario, updateUsuario };
