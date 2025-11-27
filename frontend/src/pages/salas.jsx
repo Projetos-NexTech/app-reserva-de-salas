@@ -2,7 +2,7 @@ import React from 'react'
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
 
-function salasDisponiveis() {
+function Salas() {
   return (
     <div>
       <NavBar/>
@@ -14,4 +14,4 @@ function salasDisponiveis() {
   )
 }
 
-export default salasDisponiveis
+export default Salas

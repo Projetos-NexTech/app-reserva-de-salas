@@ -20,13 +20,13 @@ function NavBar() {
       <nav className="navbar-bottom">
         <ul className="menu-list">
           <li>
-            <a href="#home">Início</a>
+            <a href="/home">Início</a>
           </li>
           <li>
-            <a href="#about">Minhas reservas</a>
+            <a href="/minhas-reservas">Minhas reservas</a>
           </li>
           <li>
-            <a href="#rooms">Salas</a>
+            <a href="/salas">Salas</a>
           </li>
           <li>
             <a href="#contact">Contato</a>

@@ -6,6 +6,8 @@ import Redefinir_senha from "./pages/redefinir-senha.jsx";
 import Reservar_sala from "./pages/reservar-sala.jsx";
 import Perfil from "./pages/perfil.jsx";
 import Home from "./pages/home.jsx";
+import Salas from "./pages/salas.jsx";
+import Minhas_reservas from "./pages/minhas-reservas.jsx";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/reservar-sala" element={<Reservar_sala />} />
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/salas" element={<Salas />}/>
+        <Route path="/minhas-reservas" element={<Minhas_reservas />}/>
       </Routes>
     </BrowserRouter>
   );
