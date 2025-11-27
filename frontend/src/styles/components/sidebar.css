@@ -1,0 +1,33 @@
+.sidebar {
+  background-color: black;
+  color: white;
+  width: 45rem;
+  height: 50vh;
+  padding: 2rem;
+}
+
+.tag {
+  color: #9897976e;
+  padding: 1rem 0rem;
+  border-bottom: solid 1px #9897976e;
+  font-size: 0.9rem;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600px;
+  margin-bottom: 1rem;
+}
+
+.sidebar .button-secondary {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}

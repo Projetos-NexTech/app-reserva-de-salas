@@ -1,0 +1,38 @@
+.room-card {
+    margin: 3rem 0rem 5rem 0rem;
+    width: 40rem;
+    height: 38rem;
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+    transition: outline 0.3s ease;
+}
+
+.card-content {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-grow: 1;
+}
+
+.room-card button {
+   
+    margin: 1rem;
+    justify-content: center;
+}
+
+.room-card img {
+    width: 100%;
+    height: 45%;
+    object-fit: cover;
+}
+
+.rooms-group {
+    display: flex;
+    gap: 2rem;
+}
+
+.room-card:hover {
+    outline: 5px solid white;
+    cursor: pointer;
+}

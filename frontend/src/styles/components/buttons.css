@@ -1,0 +1,149 @@
+button {
+  border-radius: 8px;
+
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: linear-gradient(
+    to right,
+    rgb(148, 148, 148) 0%,
+    rgb(148, 148, 148) 100%
+  );
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-color: black;
+  color: #ffffff;
+  border: none;
+  border-radius: 0px;
+ 
+  cursor: pointer;
+  width: auto;
+  height: 8vh;
+  position: relative;
+  transition: background-size 0.4s ease;
+}
+
+.login-container .btn-primary {
+margin-top: 1rem;
+}
+
+.login-container .arrow {
+  position: absolute;
+  right: 15%;
+  width: 3.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+} 
+
+main .btn-primary {
+  display: flex;
+  align-items: center;
+  height: 100;
+  gap: 30px;
+  padding: 2rem 2rem;
+  font-weight: 100px;
+  text-transform: uppercase;
+}
+
+main .arrow {
+  width: 2.5rem;
+}
+
+.hiperlink {
+  margin-left: 4px;
+  width: auto;
+  background: none;
+  border: none;
+  color: rgb(0, 0, 0);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  text-align: start;
+}
+
+.btn-secondary {
+  background: linear-gradient(
+    to right,
+    rgb(99, 99, 99) 0%,
+    rgb(99, 99, 99) 100%
+  );
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  background-position: left;
+  color: #ffffff;
+  font-weight: 100;
+  font-style: italic;
+  border: none;
+  border-radius: 0px;
+  cursor: pointer;
+  transition: background-size 0.4s ease;
+}
+
+.btn-tertiary {
+  background: linear-gradient(
+    to right,
+    rgb(99, 99, 99) 0%,
+    rgb(99, 99, 99) 100%
+  );
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-color: #ffffff;
+  color: black;
+  font-weight: 100;
+  font-style: italic;
+  border: none;
+  border-radius: 0px;
+  cursor: pointer;
+  transition: background-size 0.4s ease;
+}
+
+.white {
+  background: linear-gradient(
+    to right,
+    rgb(255, 255, 255) 0%,
+    rgb(255, 255, 255) 100%
+  );
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+}
+
+.white:hover img{
+  filter: invert(1);
+}
+
+.white:hover {
+  color: black;
+}
+.btn-tertiary:hover {
+  color: white;
+}
+
+.toRightTransition:hover {
+  background-size: 100% 100%;
+}
+
+.profile-group {
+  margin-left: auto;
+  margin-right: 2rem;
+  border: solid 1px #ffffff;
+}
+
+.navbar-top button {
+  padding: 0.8rem 1.8rem;
+}
+
+.sidebar .button-secondary{
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+}

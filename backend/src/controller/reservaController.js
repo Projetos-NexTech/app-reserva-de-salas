@@ -27,9 +27,9 @@ async function createReserva(req, res) {
     (async () => {
       try {
         await emailService.sendReservaCreatedEmail(usuario, sala, reserva);
-        console.log('Email de confirmação enviado para', usuario.email);
+        console.log(' Email de confirmação enviado para', usuario.email);
       } catch (err) {
-        console.error('Falha ao enviar email de confirmação:', err);
+        console.error(' Falha ao enviar email de confirmação:', err.message || err);
       }
     })();
 

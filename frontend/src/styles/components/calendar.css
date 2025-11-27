@@ -1,0 +1,47 @@
+.react-calendar {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  border: solid 1px #cccccc;
+}
+
+.react-calendar__tile {
+  padding: 1rem;
+  border-radius: 0px;
+  background-color: transparent;
+  border: none;
+  color: #000000;
+}
+
+.react-calendar__tile--active{
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+}
+
+/* Dias inválidos (sobrescreve tudo) */
+.react-calendar__tile:disabled {
+  color: #d0d0d0;
+}
+
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #707070;
+  background-color: #ececec;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #ff0000;
+}
+
+.react-calendar__navigation button{
+  background-color: transparent;
+  border: none;
+  color: #000000;
+  font-weight: 500px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin: 0rem 0.5rem;
+  padding: 3rem 1rem;
+}

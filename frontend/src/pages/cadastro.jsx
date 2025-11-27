@@ -1,26 +1,50 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import logo from "../assets/logos/logo-pina.png";
+import rightarrow from "../assets/icons/right-arrow.svg";
 
 function Cadastro() {
+  //Função para navegar entre páginas
+  const navigate = useNavigate();
+  function irPara(rota) {
+    navigate(rota);
+  }
+
   return (
-    <div>
-      <div class="left-content">
-        <img src="../public/react.svg" alt="Logo" />
-        <h1>CADASTRO</h1>
-        <form id="login-form">
-          <label htmlFor="email">Email</label>
-          <input type="email" placeholder="exmplo@gmail.com" required />
+    <div className="login-container">
+      <div className="left-content">
+        <img className="logo" src={logo} alt="Logo" />
+        <h1>Crie uma nova conta</h1>
 
-          <label htmlFor="password">Senha</label>
-          <input type="password" placeholder="Senha" required />
+        <form id="login-form" className="input-group">
+          <div className="full-name-group">
+            <label htmlFor="name">Nome completo</label>
+            <input type="name" required />
+          </div>
+          <div className="email-group">
+            <label htmlFor="email">Email</label>
+            <input type="email" required />
+          </div>
+          <div className="password-group">
+            <label htmlFor="password">Senha</label>
+            <input type="password" required />
+          </div>
 
-          <button>Esqueci minha senha</button>
-          <button type="submit">Entrar</button>
+          <button className="btn-primary" type="submit">
+            Criar
+            <img className="arrow" src={rightarrow} alt="" />
+          </button>
         </form>
+
+        <p>
+          Já possui uma conta?
+          <button className="hiperlink" onClick={() => irPara("/login")}>
+            Faça login
+          </button>
+        </p>
       </div>
 
-      <div class="right-content">
-        <img src="../public/vite.svg" alt="Foto Pinacoteca" />
-      </div>
+      <div className="right-content"></div>
     </div>
   );
 }

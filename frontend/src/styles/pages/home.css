@@ -1,0 +1,35 @@
+main {
+  background-color: black;
+  padding: 3rem;
+}
+
+.white-title {
+  font-size: 2.5rem;
+  font-weight: 450;
+  color: white;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+}
+
+.section-title-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+section {
+  margin-bottom: 5rem;
+  border-bottom: solid 1px #ffffff2f;
+}
+
+.home-container .first-section {
+  background-image: url("../../assets/images/bg-login.png");
+  background-position: center;
+  width: 100%;
+  height: 45rem;
+  padding: 0;
+  margin: 0;
+}

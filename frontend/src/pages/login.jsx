@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/images/logo-pina.png";
+import logo from "../assets/logos/logo-pina.png";
 import rightarrow from "../assets/icons/right-arrow.svg";
 
 function Login() {
@@ -19,38 +19,36 @@ function Login() {
         <form id="login-form" className="input-group">
           <div className="email-group">
             <label htmlFor="email">Email</label>
-            <input type="email" placeholder="exemplo@email.com" required />
+            <input type="email" required />
           </div>
           <div className="password-group">
             <label htmlFor="password">Senha</label>
-            <input type="password" placeholder="Senha" required />
+            <input type="password" required />
             <div className="forgot-my-password-group">
-              <button
-                className="hiperlink btn-"
+              <a
+                className="hiperlink"
                 onClick={() => irPara("/redefinir-senha")}
               >
                 Esqueci minha senha
-              </button>
+              </a>
             </div>
           </div>
 
-          <button className="btn-primary" type="submit">
+          <button className="btn-primary toRightTransition" type="submit">
             Entrar
-            <img src={rightarrow} alt="" />
+            <img className="arrow" src={rightarrow} alt="" />
           </button>
         </form>
 
         <p>
           Não tem uma conta?
-          <button className="hiperlink" onClick={() => irPara("/cadastro")}>
+          <a className="hiperlink" onClick={() => irPara("/cadastro")}>
             Crie uma
-          </button>
+          </a>
         </p>
       </div>
 
-      <div className="right-content">
-        <img src="" alt="Foto Pinacoteca" />
-      </div>
+      <div className="right-content"></div>
     </div>
   );
 }

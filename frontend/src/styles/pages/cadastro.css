@@ -1,0 +1,80 @@
+body {
+  background-color: white;
+  color: black;
+  font-family: Poppins, sans-serif;
+}
+
+/* h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+ */
+.login-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.logo {
+  height: 3rem;
+  display: flex;
+  position: absolute;
+  top: 4rem;
+}
+
+.right-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: rgb(255, 255, 255);
+}
+
+.left-content {
+  display: flex;
+  flex: 2;
+  background-color: #000000;
+  background-image: url('../../assets/images/bg-login.png');
+  background-position: center;
+}
+
+.hiperlink {
+  background: none;
+  border: none;
+  color: rgb(0, 0, 0);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.forgot-my-password-group {
+  display: flex;
+  justify-content: flex-end;
+}
+
+label {
+  display: block;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  font-weight: 300;
+}
+
+input {
+  display: flex;
+  height: 5vh;
+  width: 350px;
+  border: 1px solid #000000;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
