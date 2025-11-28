@@ -105,12 +105,12 @@ function Perfil() {
             </div>
 
             <div className="btn-group">
-              <button className="btn-primary" type="submit">
+              <button className="btn-tertiary toRightTransition" type="submit">
                 Salvar
               </button>
               <button
                 type="button"
-                className="btn-secondary"
+                className="btn-secondary toRightTransition"
                 onClick={() => {
                   setNome(user?.nome || "");
                   setEmail(user?.email || "");

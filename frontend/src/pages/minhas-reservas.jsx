@@ -1,17 +1,15 @@
-import React from 'react'
-import NavBar from '../components/NavBar'
-import Footer from '../components/Footer'
+import React from "react";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 function MinhasReservas() {
-    return (
+  return (
+    <div>
+      <NavBar />
 
-        <div>
-            <NavBar />
-
-            <Footer />
-        </div>
-
-    )
+      <Footer />
+    </div>
+  );
 }
 
-export default MinhasReservas
+export default MinhasReservas;

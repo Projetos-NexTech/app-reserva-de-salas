@@ -6,19 +6,13 @@
 }
 
 .perfil-main {
+  background: #ffffff;
   display: flex;
   gap: 2rem;
   padding: 2rem;
   align-items: flex-start;
 }
 
-.profile-card {
-  background: #ffffff;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  width: 320px;
-}
 
 .profile-card h2 {
   margin: 0 0 1rem 0;
@@ -46,16 +40,25 @@
 
 .btn-group {
   display: flex;
+  flex-direction: column;
   gap: 0.75rem;
   margin-top: 1rem;
 }
 
+.btn-group .btn-tertiary {
+  padding: 1rem 8rem;
+  background-color: black;
+  color: white;
+}
+
+.btn-group .btn-secondary {
+  padding: 1rem 8rem;
+  border: solid 1px black;
+  color: rgb(0, 0, 0);
+}
+
 .reservations-panel {
   flex: 1;
-  background: #ffffff;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 .reservation-item {
