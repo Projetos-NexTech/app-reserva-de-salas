@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import Calendar from "react-calendar";
@@ -47,6 +48,10 @@ function ReservarSala() {
     setSelectedDate(date);
     setShowTimes(true);
   };
+
+  const location = useLocation();
+  const room = location?.state?.room || null;
+  const roomTitle = room?.nome || "Selecione uma sala";
 
   return (
     <div className="reservar-sala-container">
@@ -118,7 +123,7 @@ function ReservarSala() {
         </div>
 
         <SideBar
-          title="Auditório 1"
+          title={roomTitle}
           date={selectedDate ? selectedDate.toLocaleDateString() : "Selecione um dia"}
           hour={
             startHour && endHour
