@@ -2,10 +2,27 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logos/logo-pina.png";
 import rightarrow from "../assets/icons/right-arrow.svg";
+import { login } from "../services/authService";
 
 function Login() {
-  //Função para navegar entre páginas
   const navigate = useNavigate();
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  async function handleLogin(e) {
+    e.preventDefault();
+
+    try {
+      const data = await login(email, password);
+      localStorage.setItem("token", data.token || "FAKE_TOKEN");
+      navigate("/home");
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
+  //Função para navegar entre páginas
+
   function irPara(rota) {
     navigate(rota);
   }
@@ -16,14 +33,19 @@ function Login() {
         <img className="logo" src={logo} alt="Logo" />
         <h1>Bem-vindo de volta!</h1>
 
-        <form id="login-form" className="input-group">
+        <form id="login-form" className="input-group" onSubmit={handleLogin}>
           <div className="email-group">
             <label htmlFor="email">Email</label>
-            <input type="email" required />
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
           <div className="password-group">
             <label htmlFor="password">Senha</label>
-            <input type="password" required />
+            <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
             <div className="forgot-my-password-group">
               <a
                 className="hiperlink"
