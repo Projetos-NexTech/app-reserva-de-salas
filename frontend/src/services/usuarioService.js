@@ -6,6 +6,12 @@ export async function createUser(userData) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),
   });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.menssage || "Erro ao criar usuário");
+  }
+
   return response.json();
 }
 
@@ -33,4 +39,3 @@ export async function deleteUser(id) {
     method: "DELETE",
   });
 }
-
