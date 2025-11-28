@@ -1,9 +1,15 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import pinacotecaLogo from "../assets/logos/logo-pinacoteca-sp.png";
 
 function NavBar() {
   const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  function irPara(rota) {
+    navigate(rota);
+  }
 
   return (
     <header className="navbar-container">
@@ -16,10 +22,18 @@ function NavBar() {
         <div className="profile-group">
           {!user && (
             <>
-              <button className="btn-secondary toRightTransition">
+              <button
+                onClick={() => irPara("/cadastro")}
+                className="btn-secondary toRightTransition"
+              >
                 Criar conta
               </button>
-              <button className="btn-tertiary toRightTransition">Entrar</button>
+              <button
+                onClick={() => irPara("/login")}
+                className="btn-tertiary toRightTransition"
+              >
+                Entrar
+              </button>
             </>
           )}
 
