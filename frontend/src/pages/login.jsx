@@ -18,6 +18,14 @@ function Login() {
       const data = await login(email, password);
       localStorage.setItem("token", data.token || "FAKE_TOKEN");
       localStorage.setItem("user", JSON.stringify(data.usuario));
+      // salvar usuárioId compatível com outras partes do app
+      const uid = data?.usuario?.id || data?.usuarioId || data?.id || null;
+      if (uid) {
+        try {
+          localStorage.setItem("usuarioId", uid);
+          localStorage.setItem("userId", uid);
+        } catch (e) {}
+      }
       // Atualiza o contexto de autenticação para refletir o login imediatamente
       if (setUser) setUser(data.usuario);
 

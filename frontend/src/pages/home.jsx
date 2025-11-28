@@ -40,7 +40,7 @@ function Home() {
     if (t === null || t === undefined || t === "") return "-";
     const s = String(t).trim();
     if (s.toLowerCase().includes("m")) return s;
-    return `${s}m2`;
+    return `${s}M²`;
   };
 
   const formatCapacidade = (c) => {
@@ -87,7 +87,7 @@ function Home() {
                 key={room.id + "-available"}
                 title={room.nome}
                 area={`Tamanho: ${formatTamanho(room.tamanho)}`}
-                capacity={`• Capacidade: ${formatCapacidade(room.capacidade)}`}
+                capacity={`Capacidade: ${formatCapacidade(room.capacidade)}`}
                 image={room.image || `https://picsum.photos/seed/${room.id}/400/250`}
                 onClick={() => handleOpen(room)}
               />
