@@ -1,0 +1,91 @@
+/* Estilos básicos para a página de perfil, seguindo o padrão das outras páginas */
+.perfil-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.perfil-main {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  align-items: flex-start;
+}
+
+.profile-card {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  width: 320px;
+}
+
+.profile-card h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75rem;
+}
+
+.profile-field label {
+  font-size: 0.85rem;
+  margin-bottom: 0.35rem;
+  color: #333;
+}
+
+.profile-field input {
+  height: 38px;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.reservations-panel {
+  flex: 1;
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.reservation-item {
+  border-bottom: 1px solid #eee;
+  padding: 0.75rem 0;
+}
+
+.reservation-item:last-child {
+  border-bottom: none;
+}
+
+.reservation-title {
+  font-weight: 600;
+}
+
+.small {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.empty {
+  color: #777;
+  padding: 1rem 0;
+}
+
+@media (max-width: 900px) {
+  .perfil-main {
+    flex-direction: column;
+  }
+  .profile-card {
+    width: 100%;
+  }
+}

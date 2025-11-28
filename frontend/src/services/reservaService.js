@@ -1,5 +1,5 @@
-const API_URL = "http://localhost:3000/api/reserva";
 import { getAuthHeaders, handleResponse } from "./apiClient";
+const API_URL = "http://localhost:3000/api/reserva";
 
 export async function createReservation(reservationData) {
   const response = await fetch(API_URL, {
@@ -17,6 +17,11 @@ export async function listResevartions() {
   return handleResponse(response);
 }
 
+export async function listReservationsByUser(usuarioId) {
+  const url = `${API_URL}?usuarioId=${encodeURIComponent(usuarioId)}`;
+  const response = await fetch(url, { headers: getAuthHeaders(false) });
+  return handleResponse(response);
+}
 export async function getReservationById(id) {
   const response = await fetch(`${API_URL}/${id}`, {
     headers: getAuthHeaders(false),

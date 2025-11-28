@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import rightarrow from "../assets/icons/right-arrow.svg";
 import { useNavigate } from "react-router-dom";
 import { listRooms } from "../services/salaService";
+import Dashboard from "../components/Dashboard";
 
 function Home() {
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ function Home() {
       <NavBar />
       <section className="first-section"></section>
       <main>
+        <Dashboard />
         <section>
           <div className="section-title-group">
             <h1 className="white-title">Minhas Reservas</h1>
