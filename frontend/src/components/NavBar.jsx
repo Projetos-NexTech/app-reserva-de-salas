@@ -39,7 +39,10 @@ function NavBar() {
 
           {user && (
             <>
-              <button className="btn-secondary toRightTransition">
+              <button
+                className="btn-secondary toRightTransition"
+                onClick={() => irPara("/perfil")}
+              >
                 {user && (user.nome || user.name || user.email)}
               </button>
               <button
