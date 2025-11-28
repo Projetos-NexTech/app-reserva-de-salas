@@ -35,6 +35,7 @@ function Home() {
   const handleOpen = (room) => {
     navigate("/reservar-sala", { state: { room } });
   };
+  const availableRooms = rooms.filter((r) => r.disponivel);
 
   return (
     <div className="home-container">
@@ -60,7 +61,7 @@ function Home() {
                 key={room.id}
                 title={room.nome}
                 area={`Tamanho: ${room.tamanho || "-"} • Capacidade: ${room.capacidade || "-"}`}
-                features={[(room.recursos || []).join(" • ") || "Sem recursos", `Descrição: ${room.descricao || "-"}`, room.disponivel ? "Disponível" : "Indisponível"]}
+                features={[(room.recursos || []).join(" • ") || "Sem recursos", `Descrição: ${room.descricao || "-"}`]}
                 image={room.image || `https://picsum.photos/seed/${room.id}/400/250`}
                 onClick={() => handleOpen(room)}
               />
@@ -78,12 +79,13 @@ function Home() {
           </div>
 
           <div className="rooms-group">
-            {rooms.map((room) => (
+            {availableRooms.length === 0 && <p>Nenhuma sala disponível no momento.</p>}
+            {availableRooms.map((room) => (
               <RoomCard
                 key={room.id + "-available"}
                 title={room.nome}
                 area={`Tamanho: ${room.tamanho || "-"} • Capacidade: ${room.capacidade || "-"}`}
-                features={[(room.recursos || []).join(" • ") || "Sem recursos", `Descrição: ${room.descricao || "-"}`, room.disponivel ? "Disponível" : "Indisponível"]}
+                features={[(room.recursos || []).join(" • ") || "Sem recursos", `Descrição: ${room.descricao || "-"}`]}
                 image={room.image || `https://picsum.photos/seed/${room.id}/400/250`}
                 onClick={() => handleOpen(room)}
               />
