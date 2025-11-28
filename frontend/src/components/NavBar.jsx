@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import pinacotecaLogo from "../assets/logos/logo-pinacoteca-sp.png";
 
 function NavBar() {
+  const { user, logout } = useContext(AuthContext);
+
   return (
     <header className="navbar-container">
       <div className="navbar-top">
@@ -11,10 +14,28 @@ function NavBar() {
           alt="Pinacoteca de São Paulo"
         />
         <div className="profile-group">
-          <button className="btn-secondary toRightTransition">Criar conta</button>
-          <button className="btn-tertiary toRightTransition">
-            Entrar
-          </button>
+          {!user && (
+            <>
+              <button className="btn-secondary toRightTransition">
+                Criar conta
+              </button>
+              <button className="btn-tertiary toRightTransition">Entrar</button>
+            </>
+          )}
+
+          {user && (
+            <>
+              <button className="btn-secondary toRightTransition">
+                {user && (user.nome || user.name || user.email)}
+              </button>
+              <button
+                className="btn-tertiary toRightTransition"
+                onClick={logout}
+              >
+                Sair
+              </button>
+            </>
+          )}
         </div>
       </div>
       <nav className="navbar-bottom">

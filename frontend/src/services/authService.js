@@ -7,12 +7,19 @@ export async function login(email, senha) {
     body: JSON.stringify({ email, senha }),
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Erro no login");
+    throw new Error(data.error || data.message || "Erro no login");
   }
 
-  return response.json();
+  // O backend retorna { success: true, user: { ... } }
+  // Normalizar para o formato esperado pelo frontend: { usuario, token }
+  return {
+    usuario: data.usuario || data.user || null,
+    token: data.token || null,
+    raw: data,
+  };
 }
 
 export async function resetPasword(email) {
@@ -32,17 +39,17 @@ export async function resetPasword(email) {
 }
 
 export async function syncAuth(sendResetEmail = false) {
-    const response = await fetch(`${API_URL}/sync-auth`, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ sendResetEmail }),
-    });
+  const response = await fetch(`${API_URL}/sync-auth`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ sendResetEmail }),
+  });
 
-    const data = await response.json();
+  const data = await response.json();
 
-    if (!response.ok) {
-        throw new Error(data.error || "Erro na sincronização");
-    }
+  if (!response.ok) {
+    throw new Error(data.error || "Erro na sincronização");
+  }
 
-    return data;
+  return data;
 }
