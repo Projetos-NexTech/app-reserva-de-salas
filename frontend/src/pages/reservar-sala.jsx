@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { createReservation } from "../services/reservaService";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import Calendar from "react-calendar";
@@ -52,6 +53,47 @@ function ReservarSala() {
   const location = useLocation();
   const room = location?.state?.room || null;
   const roomTitle = room?.nome || "Selecione uma sala";
+  const navigate = useNavigate();
+
+  // função que realiza o POST da reserva usando dados selecionados na tela
+  const handleSaveReservation = async () => {
+    if (!room || !room.id) {
+      alert("Selecione uma sala antes de reservar.");
+      return;
+    }
+    if (!selectedDate) {
+      alert("Selecione uma data.");
+      return;
+    }
+    if (!startHour || !endHour) {
+      alert("Selecione horário de início e fim.");
+      return;
+    }
+
+    const userIdToUse = localStorage.getItem("usuarioId") || localStorage.getItem("userId");
+    if (!userIdToUse) {
+      alert("Você precisa estar logado. Faça login antes de reservar.");
+      return;
+    }
+
+    const dataReserva = new Date(selectedDate).toISOString().slice(0, 10);
+    const payload = {
+      usuarioId: userIdToUse,
+      salaId: room.id,
+      dataReserva,
+      horarioInicio: startHour,
+      horarioFim: endHour,
+    };
+
+    try {
+      await createReservation(payload);
+      alert("Reserva criada com sucesso.");
+      navigate("/minhas-reservas");
+    } catch (err) {
+      console.error(err);
+      alert(err.message || "Erro ao criar reserva");
+    }
+  };
 
   return (
     <div className="reservar-sala-container">
@@ -130,6 +172,7 @@ function ReservarSala() {
               ? `${startHour} - ${endHour}`
               : "Selecione horários"
           }
+          onReserve={handleSaveReservation}
 
         />
       </main>
