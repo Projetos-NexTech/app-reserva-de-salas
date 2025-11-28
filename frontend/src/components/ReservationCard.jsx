@@ -1,6 +1,6 @@
 import React from "react";
 
-function ReservationCard({ title, area, capacity = [], image, onClick }) {
+function ReservationCard({ title, area, capacity, image, onClick }) {
   return (
     <div
       className="reservation-card"
@@ -34,4 +34,4 @@ function ReservationCard({ title, area, capacity = [], image, onClick }) {
   );
 }
 
-export default RoomCard;
+export default ReservationCard;

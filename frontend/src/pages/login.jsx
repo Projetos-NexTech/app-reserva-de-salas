@@ -20,9 +20,8 @@ function Login() {
       alert(error.message);
     }
   }
-
+  
   //Função para navegar entre páginas
-
   function irPara(rota) {
     navigate(rota);
   }
