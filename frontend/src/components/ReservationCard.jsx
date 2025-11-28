@@ -1,9 +1,9 @@
 import React from "react";
 
-function RoomCard({ title, area, capacity = [], image, onClick }) {
+function ReservationCard({ title, area, capacity = [], image, onClick }) {
   return (
     <div
-      className="room-card"
+      className="reservation-card"
       onClick={onClick}
       role="button"
       tabIndex={0}

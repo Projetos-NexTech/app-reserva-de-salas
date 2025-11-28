@@ -36,6 +36,17 @@ function Home() {
     navigate("/reservar-sala", { state: { room } });
   };
   const availableRooms = rooms.filter((r) => r.disponivel);
+  const formatTamanho = (t) => {
+    if (t === null || t === undefined || t === "") return "-";
+    const s = String(t).trim();
+    if (s.toLowerCase().includes("m")) return s;
+    return `${s}m2`;
+  };
+
+  const formatCapacidade = (c) => {
+    if (c === null || c === undefined || c === "") return "-";
+    return String(c);
+  };
 
   return (
     <div className="home-container">
@@ -56,16 +67,7 @@ function Home() {
           {error && <p className="error">{error}</p>}
 
           <div className="rooms-group">
-            {rooms.map((room) => (
-              <RoomCard
-                key={room.id}
-                title={room.nome}
-                area={`Tamanho: ${room.tamanho || "-"} • Capacidade: ${room.capacidade || "-"}`}
-                features={[(room.recursos || []).join(" • ") || "Sem recursos", `Descrição: ${room.descricao || "-"}`]}
-                image={room.image || `https://picsum.photos/seed/${room.id}/400/250`}
-                onClick={() => handleOpen(room)}
-              />
-            ))}
+            
           </div>
         </section>
 
@@ -84,8 +86,8 @@ function Home() {
               <RoomCard
                 key={room.id + "-available"}
                 title={room.nome}
-                area={`Tamanho: ${room.tamanho || "-"} • Capacidade: ${room.capacidade || "-"}`}
-                features={[(room.recursos || []).join(" • ") || "Sem recursos", `Descrição: ${room.descricao || "-"}`]}
+                area={`Tamanho: ${formatTamanho(room.tamanho)}`}
+                capacity={`• Capacidade: ${formatCapacidade(room.capacidade)}`}
                 image={room.image || `https://picsum.photos/seed/${room.id}/400/250`}
                 onClick={() => handleOpen(room)}
               />
