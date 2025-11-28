@@ -1,16 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import RoomCard from "../components/RoomCard";
 import Footer from "../components/Footer";
 import rightarrow from "../assets/icons/right-arrow.svg";
+import { useNavigate } from "react-router-dom";
+import { listRooms } from "../services/salaService";
 
 function Home() {
+  const navigate = useNavigate();
+  const [rooms, setRooms] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let mounted = true;
+    async function fetchRooms() {
+      try {
+        setLoading(true);
+        const data = await listRooms();
+        if (!mounted) return;
+        setRooms(Array.isArray(data) ? data : []);
+      } catch (err) {
+        if (!mounted) return;
+        setError(err.message || "Erro ao carregar salas");
+      } finally {
+        if (!mounted) return;
+        setLoading(false);
+      }
+    }
+    fetchRooms();
+    return () => { mounted = false; };
+  }, []);
+
+  const handleOpen = (room) => {
+    navigate("/reservar-sala", { state: { room } });
+  };
+
   return (
     <div className="home-container">
       <NavBar />
-        <section className="first-section">
-
-        </section>
+      <section className="first-section"></section>
       <main>
         <section>
           <div className="section-title-group">
@@ -21,27 +50,24 @@ function Home() {
               <img className="arrow" src={rightarrow} alt="" />
             </button>
           </div>
+
+          {loading && <p>Carregando salas...</p>}
+          {error && <p className="error">{error}</p>}
+
           <div className="rooms-group">
-            <RoomCard
-              title="Sala 1"
-              area="Área: 20m"
-              features={["Capacidade: 10 pessoas", "Projetor", "Wi-Fi"]}
-              image="https://picsum.photos/id/237/400/250"
-            />
-            <RoomCard
-              title="Sala 2"
-              area="Área: 50m"
-              features={["Capacidade: 10 pessoas", "Projetor", "Wi-Fi"]}
-              image="https://picsum.photos/id/237/400/250"
-            />
-            <RoomCard
-              title="Sala 3"
-              area="Área: 160m"
-              features={["Capacidade: 10 pessoas", "Projetor", "Wi-Fi"]}
-              image="https://picsum.photos/id/237/400/250"
-            />
+            {rooms.map((room) => (
+              <RoomCard
+                key={room.id}
+                title={room.nome}
+                area={`Tamanho: ${room.tamanho || "-"} • Capacidade: ${room.capacidade || "-"}`}
+                features={[(room.recursos || []).join(" • ") || "Sem recursos", `Descrição: ${room.descricao || "-"}`, room.disponivel ? "Disponível" : "Indisponível"]}
+                image={room.image || `https://picsum.photos/seed/${room.id}/400/250`}
+                onClick={() => handleOpen(room)}
+              />
+            ))}
           </div>
         </section>
+
         <section>
           <div className="section-title-group">
             <h1 className="white-title">Salas disponíveis</h1>
@@ -50,25 +76,18 @@ function Home() {
               <img className="arrow" src={rightarrow} alt="" />
             </button>
           </div>
+
           <div className="rooms-group">
-            <RoomCard
-              title="Sala 1"
-              area="Área: 20m"
-              features={["Capacidade: 10 pessoas", "Projetor", "Wi-Fi"]}
-              image="https://picsum.photos/id/237/400/250"
-            />
-            <RoomCard
-              title="Sala 2"
-              area="Área: 50m"
-              features={["Capacidade: 10 pessoas", "Projetor", "Wi-Fi"]}
-              image="https://picsum.photos/id/237/400/250"
-            />
-            <RoomCard
-              title="Sala 3"
-              area="Área: 160m"
-              features={["Capacidade: 10 pessoas", "Projetor", "Wi-Fi"]}
-              image="https://picsum.photos/id/237/400/250"
-            />
+            {rooms.map((room) => (
+              <RoomCard
+                key={room.id + "-available"}
+                title={room.nome}
+                area={`Tamanho: ${room.tamanho || "-"} • Capacidade: ${room.capacidade || "-"}`}
+                features={[(room.recursos || []).join(" • ") || "Sem recursos", `Descrição: ${room.descricao || "-"}`, room.disponivel ? "Disponível" : "Indisponível"]}
+                image={room.image || `https://picsum.photos/seed/${room.id}/400/250`}
+                onClick={() => handleOpen(room)}
+              />
+            ))}
           </div>
         </section>
       </main>

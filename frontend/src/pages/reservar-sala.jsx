@@ -118,7 +118,6 @@ function ReservarSala() {
         </div>
 
         <SideBar
-          pinacoteca="Pinacoteca de São Paulo"
           title="Auditório 1"
           date={selectedDate ? selectedDate.toLocaleDateString() : "Selecione um dia"}
           hour={

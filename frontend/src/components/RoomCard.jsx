@@ -1,20 +1,35 @@
 import React from "react";
 
-function RoomCard({ title, area, features, image, textbutton }) {
+function RoomCard({ title, area, features = [], image, onClick }) {
   return (
-    <div className="room-card">
+    <div
+      className="room-card"
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if ((e.key === "Enter" || e.key === " ") && onClick) onClick(e);
+      }}
+    >
       <img src={image} alt={title} className="room-image" />
       <div className="card-content">
         <h3>{title}</h3>
         <ul>
           <li>{area}</li>
-          {features.map((feature, index) => (
+          {features && features.map((feature, index) => (
             <li key={index}>{feature}</li>
           ))}
         </ul>
 
-        <button className="btn-primary toRightTransition">
-          {textbutton}
+        <button
+          type="button"
+          className="btn-primary toRightTransition"
+          onClick={(e) => {
+            e.stopPropagation();
+            if (onClick) onClick(e);
+          }}
+        >
+          Conferir disponibilidade
         </button>
       </div>
     </div>
