@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import NavBar from "../components/NavBar";
 import RoomCard from "../components/RoomCard";
 import Footer from "../components/Footer";
 import rightarrow from "../assets/icons/right-arrow.svg";
 import { useNavigate } from "react-router-dom";
 import { listRooms } from "../services/salaService";
+import { getAdminById } from "../services/adminService";
+import { AuthContext } from "../context/AuthContext";
 import Dashboard from "../components/Dashboard";
 
 function Home() {
@@ -12,6 +14,8 @@ function Home() {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     let mounted = true;
@@ -32,6 +36,25 @@ function Home() {
     fetchRooms();
     return () => { mounted = false; };
   }, []);
+
+  useEffect(() => {
+    let mounted = true;
+    async function checkAdmin() {
+      try {
+        const currentUserId = user?.id || JSON.parse(localStorage.getItem("user") || "null")?.id || localStorage.getItem("usuarioId") || localStorage.getItem("userId");
+        if (!currentUserId) {
+          if (mounted) setIsAdmin(false);
+          return;
+        }
+        const admin = await getAdminById(currentUserId);
+        if (mounted) setIsAdmin(!!(admin && admin.id));
+      } catch (err) {
+        if (mounted) setIsAdmin(false);
+      }
+    }
+    checkAdmin();
+    return () => { mounted = false; };
+  }, [user]);
 
   const handleOpen = (room) => {
     navigate("/reservar-sala", { state: { room } });
