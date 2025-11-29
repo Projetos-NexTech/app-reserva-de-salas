@@ -5,9 +5,12 @@ import Footer from "../components/Footer";
 import rightarrow from "../assets/icons/right-arrow.svg";
 import { useNavigate } from "react-router-dom";
 import { listRooms } from "../services/salaService";
+import { listReservationsByUser } from "../services/reservaService";
 import { getAdminById } from "../services/adminService";
 import { AuthContext } from "../context/AuthContext";
 import Dashboard from "../components/Dashboard";
+import ReservationCard from "../components/ReservationCard";
+import "../styles/pages/salas.css"; // reuse grid styles
 
 function Home() {
   const navigate = useNavigate();
@@ -15,7 +18,15 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [reservas, setReservas] = useState([]);
+  const [loadingReservas, setLoadingReservas] = useState(true);
+  const [pageIndex, setPageIndex] = useState(0);
+  const itemsPerPage = 3;
   const { user } = useContext(AuthContext);
+
+  function irPara(rota) {
+    navigate(rota);
+  }
 
   useEffect(() => {
     let mounted = true;
@@ -34,14 +45,46 @@ function Home() {
       }
     }
     fetchRooms();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, []);
+
+  useEffect(() => {
+    let mounted = true;
+    async function fetchReservas() {
+      try {
+        setLoadingReservas(true);
+        const currentUserId =
+          user?.id || JSON.parse(localStorage.getItem("user") || "null")?.id;
+        if (!currentUserId) {
+          if (mounted) setReservas([]);
+          return;
+        }
+        const data = await listReservationsByUser(currentUserId);
+        if (!mounted) return;
+        setReservas(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Erro ao buscar reservas:", err);
+      } finally {
+        if (mounted) setLoadingReservas(false);
+      }
+    }
+    fetchReservas();
+    return () => {
+      mounted = false;
+    };
+  }, [user]);
 
   useEffect(() => {
     let mounted = true;
     async function checkAdmin() {
       try {
-        const currentUserId = user?.id || JSON.parse(localStorage.getItem("user") || "null")?.id || localStorage.getItem("usuarioId") || localStorage.getItem("userId");
+        const currentUserId =
+          user?.id ||
+          JSON.parse(localStorage.getItem("user") || "null")?.id ||
+          localStorage.getItem("usuarioId") ||
+          localStorage.getItem("userId");
         if (!currentUserId) {
           if (mounted) setIsAdmin(false);
           return;
@@ -53,7 +96,9 @@ function Home() {
       }
     }
     checkAdmin();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, [user]);
 
   const handleOpen = (room) => {
@@ -82,38 +127,104 @@ function Home() {
           <div className="section-title-group">
             <h1 className="white-title">Minhas Reservas</h1>
 
-            <button className="btn-primary toRightTransition white">
+            <button
+              className="btn-primary toRightTransition white"
+              onClick={() => irPara("/minhas-reservas")}
+            >
               Confira suas reservas
               <img className="arrow" src={rightarrow} alt="" />
             </button>
           </div>
 
-          {loading && <p>Carregando salas...</p>}
+          {loadingReservas && <p>Carregando reservas...</p>}
           {error && <p className="error">{error}</p>}
 
-          <div className="rooms-group">
-            
-          </div>
+          {loadingReservas ? null : reservas.length === 0 ? (
+            <p>Você não possui reservas.</p>
+          ) : (
+            <>
+              {reservas.length > itemsPerPage && (
+                <div className="slider-controls">
+                  <button
+                    type="button"
+                    className="slider-btn"
+                    onClick={() =>
+                      setPageIndex(
+                        (prev) =>
+                          (prev -
+                            1 +
+                            Math.ceil(reservas.length / itemsPerPage)) %
+                          Math.ceil(reservas.length / itemsPerPage)
+                      )
+                    }
+                  >
+                    ◀
+                  </button>
+                  <button
+                    type="button"
+                    className="slider-btn"
+                    onClick={() =>
+                      setPageIndex(
+                        (prev) =>
+                          (prev + 1) % Math.ceil(reservas.length / itemsPerPage)
+                      )
+                    }
+                  >
+                    ▶
+                  </button>
+                </div>
+              )}
+
+              <div className="rooms-grid">
+                {reservas
+                  .slice(
+                    pageIndex * itemsPerPage,
+                    pageIndex * itemsPerPage + itemsPerPage
+                  )
+                  .map((r) => (
+                    <ReservationCard
+                      key={r.id}
+                      sala={r.salaNome || r.sala?.nome || r.sala}
+                      data={r.data}
+                      horario={
+                        r.horario ||
+                        `${r.horaInicio || ""} - ${r.horaFim || ""}`
+                      }
+                      status={r.status}
+                      imagem={r.sala?.imagem || r.imagem}
+                      onClick={() => console.log("Reserva clicada:", r)}
+                    />
+                  ))}
+              </div>
+            </>
+          )}
         </section>
 
         <section>
           <div className="section-title-group">
             <h1 className="white-title">Salas disponíveis</h1>
-            <button className="btn-primary toRightTransition white">
+            <button
+              className="btn-primary toRightTransition white"
+              onClick={() => irPara("/salas")}
+            >
               Confira todas as salas disponíveis
               <img className="arrow" src={rightarrow} alt="" />
             </button>
           </div>
 
           <div className="rooms-group">
-            {availableRooms.length === 0 && <p>Nenhuma sala disponível no momento.</p>}
+            {availableRooms.length === 0 && (
+              <p>Nenhuma sala disponível no momento.</p>
+            )}
             {availableRooms.map((room) => (
               <RoomCard
                 key={room.id + "-available"}
                 title={room.nome}
                 area={`Tamanho: ${formatTamanho(room.tamanho)}`}
                 capacity={`Capacidade: ${formatCapacidade(room.capacidade)}`}
-                image={room.image || `https://picsum.photos/seed/${room.id}/400/250`}
+                image={
+                  room.image || `https://picsum.photos/seed/${room.id}/400/250`
+                }
                 onClick={() => handleOpen(room)}
               />
             ))}
