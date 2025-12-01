@@ -136,6 +136,27 @@ function Home() {
             </button>
           </div>
 
+          <div className="rooms-grid">
+            {reservas
+              .slice(
+                pageIndex * itemsPerPage,
+                pageIndex * itemsPerPage + itemsPerPage
+              )
+              .map((r) => (
+                <ReservationCard
+                  key={r.id}
+                  sala={r.salaNome || r.sala?.nome || r.sala}
+                  data={r.data}
+                  horario={
+                    r.horario || `${r.horaInicio || ""} - ${r.horaFim || ""}`
+                  }
+                  status={r.status}
+                  imagem={r.sala?.imagem || r.imagem}
+                  onClick={() => console.log("Reserva clicada:", r)}
+                />
+              ))}
+          </div>
+
           {loadingReservas && <p>Carregando reservas...</p>}
           {error && <p className="error">{error}</p>}
 
@@ -174,28 +195,6 @@ function Home() {
                   </button>
                 </div>
               )}
-
-              <div className="rooms-grid">
-                {reservas
-                  .slice(
-                    pageIndex * itemsPerPage,
-                    pageIndex * itemsPerPage + itemsPerPage
-                  )
-                  .map((r) => (
-                    <ReservationCard
-                      key={r.id}
-                      sala={r.salaNome || r.sala?.nome || r.sala}
-                      data={r.data}
-                      horario={
-                        r.horario ||
-                        `${r.horaInicio || ""} - ${r.horaFim || ""}`
-                      }
-                      status={r.status}
-                      imagem={r.sala?.imagem || r.imagem}
-                      onClick={() => console.log("Reserva clicada:", r)}
-                    />
-                  ))}
-              </div>
             </>
           )}
         </section>
