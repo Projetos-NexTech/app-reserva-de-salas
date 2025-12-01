@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import rightarrow from "../assets/icons/right-arrow.svg";
 import "../styles/components/dashboard.css";
-import { listResevartions } from "../services/reservaService";
+import { listResevartions, deleteReservation } from "../services/reservaService";
 import { listRooms } from "../services/salaService";
 import { listUsers } from "../services/usuarioService";
 
@@ -11,6 +11,7 @@ function Dashboard() {
   const [reservations, setReservations] = useState([]);
   const [roomsMap, setRoomsMap] = useState({});
   const [usersMap, setUsersMap] = useState({});
+  const [deletingIds, setDeletingIds] = useState([]);
 
   useEffect(() => {
     let mounted = true;
@@ -98,10 +99,26 @@ function Dashboard() {
 
                       <div className="reservation-actions">
                         <button
-                          className="btn-secondary"
+                          className={`btn-secondary cancel-button`}
                           type="button"
+                          disabled={deletingIds.includes(res.id || res._id)}
+                          onClick={async () => {
+                            const id = res.id || res._id;
+                            const confirm = window.confirm("Confirma cancelamento desta reserva?");
+                            if (!confirm) return;
+                            try {
+                              setDeletingIds((prev) => [...prev, id]);
+                              await deleteReservation(id);
+                              setReservations((prev) => prev.filter((p) => (p.id || p._id) !== id));
+                            } catch (err) {
+                              console.error("Erro ao cancelar reserva:", err);
+                              alert(err.message || "Erro ao cancelar reserva");
+                            } finally {
+                              setDeletingIds((prev) => prev.filter((x) => x !== id));
+                            }
+                          }}
                         >
-                          Cancelar
+                          {deletingIds.includes(res.id || res._id) ? "Cancelando..." : "Cancelar"}
                         </button>
                       </div>
                     </div>
