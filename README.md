@@ -5,6 +5,8 @@
 # 
 Criamos uma solução para gerenciar as reservas de salas da Pinacoteca. O objetivo é fazer com que os administradores possam ter organização, sem dados duplicados e una plataforma de fácil acesso para os seus clientes.
 
+Status: Em desenvolvimento⚠️
+
 ## Tecnologias utilizadas
 - React.js
 - Node.js / Express
