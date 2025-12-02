@@ -27,11 +27,23 @@ footer .footer-top {
 }
 
 .footer-top button {
+  background: linear-gradient(
+    to right,
+    rgb(0, 0, 0) 0%,
+    rgb(0, 0, 0) 100%
+  );
+  background-size: 100% 0%;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  padding: 0;
+  align-items:  center;
   border-radius: 0px;
   border: solid 1px black;
   background-color: transparent;
   height: 10rem;
   width: 5rem;
+  transition: background-size 0.5s ease;
+  cursor: pointer;
 }
 
 .footer-top .backToTop {
@@ -39,4 +51,19 @@ footer .footer-top {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.footer-top button img {
+  transform: rotate(-90deg);
+  filter: invert();
+  transition: all 0.5s;
+}
+
+.footer-top button:hover {
+  border: none;
+}
+
+.footer-top button:hover img {
+  filter: none;
+
 }
