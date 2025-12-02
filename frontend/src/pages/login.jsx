@@ -16,22 +16,25 @@ function Login() {
 
     try {
       const data = await login(email, password);
+      const usuarioObj = data.usuario
+        ? { ...data.usuario, role: data.role }
+        : null;
       localStorage.setItem("token", data.token || "FAKE_TOKEN");
-      localStorage.setItem("user", JSON.stringify(data.usuario));
-      // salvar usuárioId compatível com outras partes do app
+      localStorage.setItem("user", JSON.stringify(usuarioObj));
       const uid = data?.usuario?.id || data?.usuarioId || data?.id || null;
       if (uid) {
         try {
           localStorage.setItem("usuarioId", uid);
           localStorage.setItem("userId", uid);
-        } catch (e) {}
+        } catch (err) {
+          console.warn("could not set usuarioId in localStorage", err);
+        }
       }
-      // Atualiza o contexto de autenticação para refletir o login imediatamente
-      if (setUser) setUser(data.usuario);
-
+      if (setUser) setUser(usuarioObj);
       navigate("/home");
     } catch (error) {
-      alert(error.message);
+      console.error(error);
+      alert(error.message || "Erro no login");
     }
   }
 
