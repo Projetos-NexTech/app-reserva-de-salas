@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import rightarrow from "../assets/icons/right-arrow.svg";
 import "../styles/components/dashboard.css";
-import { listResevartions, deleteReservation } from "../services/reservaService";
+import {
+  listResevartions,
+  deleteReservation,
+} from "../services/reservaService";
 import { listRooms } from "../services/salaService";
 import { listUsers } from "../services/usuarioService";
 
-function Dashboard() {
+function Dashboard({ isAdmin = false }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [reservations, setReservations] = useState([]);
@@ -41,7 +44,9 @@ function Dashboard() {
           });
         }
         setUsersMap(uMap);
-        setReservations(Array.isArray(reservationsData) ? reservationsData : []);
+        setReservations(
+          Array.isArray(reservationsData) ? reservationsData : []
+        );
       } catch (err) {
         if (!mounted) return;
         setError(err.message || "Erro ao carregar dados do dashboard");
@@ -64,7 +69,7 @@ function Dashboard() {
     return acc;
   }, {});
 
-  return (
+  return isAdmin ? (
     <section className="dashboard">
       <div className="section-title-group">
         <h1 className="white-title">Dashboard</h1>
@@ -87,14 +92,28 @@ function Dashboard() {
 
             {Object.entries(groupedByRoom).map(([roomId, roomReservations]) => (
               <div key={roomId} className="room-group">
-                <h3 className="room-group-title">{roomsMap[roomId]?.nome || `Sala ${roomId}`}</h3>
+                <h3 className="room-group-title">
+                  {roomsMap[roomId]?.nome || `Sala ${roomId}`}
+                </h3>
                 <div className="reservation-list">
                   {roomReservations.map((res) => (
                     <div key={res.id} className="reservation-card">
                       <div className="reservation-info">
-                        <div className="reservation-user"><strong>Usuário:</strong> {usersMap[res.usuarioId]?.nome || usersMap[res.usuario]?.nome || res.usuarioId || res.usuario || "-"}</div>
-                        <div className="reservation-date"><strong>Data:</strong> {res.dataReserva}</div>
-                        <div className="reservation-time"><strong>Horário:</strong> {res.horarioInicio} - {res.horarioFim}</div>
+                        <div className="reservation-user">
+                          <strong>Usuário:</strong>{" "}
+                          {usersMap[res.usuarioId]?.nome ||
+                            usersMap[res.usuario]?.nome ||
+                            res.usuarioId ||
+                            res.usuario ||
+                            "-"}
+                        </div>
+                        <div className="reservation-date">
+                          <strong>Data:</strong> {res.dataReserva}
+                        </div>
+                        <div className="reservation-time">
+                          <strong>Horário:</strong> {res.horarioInicio} -{" "}
+                          {res.horarioFim}
+                        </div>
                       </div>
 
                       <div className="reservation-actions">
@@ -104,21 +123,29 @@ function Dashboard() {
                           disabled={deletingIds.includes(res.id || res._id)}
                           onClick={async () => {
                             const id = res.id || res._id;
-                            const confirm = window.confirm("Confirma cancelamento desta reserva?");
+                            const confirm = window.confirm(
+                              "Confirma cancelamento desta reserva?"
+                            );
                             if (!confirm) return;
                             try {
                               setDeletingIds((prev) => [...prev, id]);
                               await deleteReservation(id);
-                              setReservations((prev) => prev.filter((p) => (p.id || p._id) !== id));
+                              setReservations((prev) =>
+                                prev.filter((p) => (p.id || p._id) !== id)
+                              );
                             } catch (err) {
                               console.error("Erro ao cancelar reserva:", err);
                               alert(err.message || "Erro ao cancelar reserva");
                             } finally {
-                              setDeletingIds((prev) => prev.filter((x) => x !== id));
+                              setDeletingIds((prev) =>
+                                prev.filter((x) => x !== id)
+                              );
                             }
                           }}
                         >
-                          {deletingIds.includes(res.id || res._id) ? "Cancelando..." : "Cancelar"}
+                          {deletingIds.includes(res.id || res._id)
+                            ? "Cancelando..."
+                            : "Cancelar"}
                         </button>
                       </div>
                     </div>
@@ -130,7 +157,7 @@ function Dashboard() {
         )}
       </div>
     </section>
-  );
+  ) : null;
 }
 
 export default Dashboard;

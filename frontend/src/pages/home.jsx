@@ -77,28 +77,12 @@ function Home() {
   }, [user]);
 
   useEffect(() => {
-    let mounted = true;
-    async function checkAdmin() {
-      try {
-        const currentUserId =
-          user?.id ||
-          JSON.parse(localStorage.getItem("user") || "null")?.id ||
-          localStorage.getItem("usuarioId") ||
-          localStorage.getItem("userId");
-        if (!currentUserId) {
-          if (mounted) setIsAdmin(false);
-          return;
-        }
-        const admin = await getAdminById(currentUserId);
-        if (mounted) setIsAdmin(!!(admin && admin.id));
-      } catch (err) {
-        if (mounted) setIsAdmin(false);
-      }
+    // Check if user.role is 'admin' from AuthContext
+    if (user && user.role === "admin") {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
     }
-    checkAdmin();
-    return () => {
-      mounted = false;
-    };
   }, [user]);
 
   const handleOpen = (room) => {
@@ -122,7 +106,7 @@ function Home() {
       <NavBar />
       <section className="first-section"></section>
       <main>
-        <Dashboard />
+        <Dashboard isAdmin={isAdmin} />
         <section>
           <div className="section-title-group">
             <h1 className="white-title">Minhas Reservas</h1>
